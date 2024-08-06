@@ -56,3 +56,15 @@ Z:\GMC SEG Folder\vb.net\My Applications\ggcClient\obj\Debug\ggcClient.vbproj.Ge
 Z:\GMC SEG Folder\vb.net\My Applications\ggcClient\obj\Debug\ggcClient.dll
 Z:\GMC SEG Folder\vb.net\My Applications\ggcClient\obj\Debug\ggcClient.xml
 Z:\GMC SEG Folder\vb.net\My Applications\ggcClient\obj\Debug\ggcClient.pdb
+C:\GGC_Systems\vb.net\ggcClient.dll
+C:\GGC_Systems\vb.net\ggcClient.pdb
+C:\GGC_Systems\vb.net\ggcClient.xml
+D:\Guanzon\GMC SEG Folder\vb.net\My Applications\ggcClient\obj\Debug\ggcClient.vbproj.AssemblyReference.cache
+D:\Guanzon\GMC SEG Folder\vb.net\My Applications\ggcClient\obj\Debug\ggcClient.frmClient.resources
+D:\Guanzon\GMC SEG Folder\vb.net\My Applications\ggcClient\obj\Debug\ggcClient.Resources.resources
+D:\Guanzon\GMC SEG Folder\vb.net\My Applications\ggcClient\obj\Debug\ggcClient.vbproj.GenerateResource.cache
+D:\Guanzon\GMC SEG Folder\vb.net\My Applications\ggcClient\obj\Debug\ggcClient.vbproj.CoreCompileInputs.cache
+D:\Guanzon\GMC SEG Folder\vb.net\My Applications\ggcClient\obj\Debug\ggcClient.vbproj.CopyComplete
+D:\Guanzon\GMC SEG Folder\vb.net\My Applications\ggcClient\obj\Debug\ggcClient.dll
+D:\Guanzon\GMC SEG Folder\vb.net\My Applications\ggcClient\obj\Debug\ggcClient.xml
+D:\Guanzon\GMC SEG Folder\vb.net\My Applications\ggcClient\obj\Debug\ggcClient.pdb
