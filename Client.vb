@@ -394,100 +394,106 @@ Public Class Client
                                             IIf(p_oDTMstr(0).Item("sSuffixNm") = "", "", " " & p_oDTMstr(0).Item("sSuffixNm")) & " " & _
                                          p_oDTMstr(0).Item("sMiddName")
 
-        If p_sParent = "" Then p_oApp.BeginTransaction()
+        Try
 
-        If p_nEditMode = xeEditMode.MODE_ADDNEW Then
-            p_oDTMstr(0).Item("sClientID") = GetNextCode(p_sMasTable, "sClientID", True, p_oApp.Connection, True, p_oApp.BranchCode)
-            lsSQL = ADO2SQL(p_oDTMstr, p_sMasTable, , p_oApp.UserID, p_oApp.SysDate)
+            If p_sParent = "" Then p_oApp.BeginTransaction()
 
-            If p_oApp.Execute(lsSQL, p_sMasTable) = 0 Then
-                If p_sParent = "" Then p_oApp.RollBackTransaction()
-                Return False
-            End If
+            If p_nEditMode = xeEditMode.MODE_ADDNEW Then
+                p_oDTMstr(0).Item("sClientID") = GetNextCode(p_sMasTable, "sClientID", True, p_oApp.Connection, True, p_oApp.BranchCode)
+                lsSQL = ADO2SQL(p_oDTMstr, p_sMasTable, , p_oApp.UserID, p_oApp.SysDate)
 
-            'Save Mobile
-            If p_oDTMstr(0).Item("sMobileNo") <> "" Then
-                lsSQL = "INSERT INTO Client_Mobile" & _
-                       " SET sClientID = " & strParm(p_oDTMstr(0).Item("sClientID")) & _
-                          ", nEntryNox = 1" & _
-                          ", sMobileNo = " & strParm(p_oDTMstr(0).Item("sMobileNo")) & _
-                          ", nPriority = 1" & _
-                          ", cIncdMktg = '1'" & _
-                          ", nNoRetryx = 0" & _
-                          ", cInvalidx = '0'" & _
-                          ", cNewMobil = '1'" & _
-                          ", cRecdStat = '1'"
-                If p_oApp.Execute(lsSQL, "Client_Mobile") = 0 Then
-                    If p_sParent = "" Then p_oApp.RollBackTransaction()
-                    Return False
-                End If
-            End If
-
-            'Save Telephone
-            If p_oDTMstr(0).Item("sPhoneNox") <> "" Then
-                lsSQL = "INSERT INTO Client_Telephone" & _
-                       " SET sClientID = " & strParm(p_oDTMstr(0).Item("sClientID")) & _
-                          ", nEntryNox = 1" & _
-                          ", sPhoneNox = " & strParm(p_oDTMstr(0).Item("sPhoneNox")) & _
-                          ", nPriority = 1" & _
-                          ", cInvalidx = '0'" & _
-                          ", cConfirmd = '0'" & _
-                          ", cRecdStat = '1'"
-                If p_oApp.Execute(lsSQL, "Client_Telephone") = 0 Then
-                    If p_sParent = "" Then p_oApp.RollBackTransaction()
-                    Return False
-                End If
-            End If
-
-            'Save Email Address
-            If p_oDTMstr(0).Item("sEmailAdd") <> "" Then
-                lsSQL = "INSERT INTO Client_eMail_Address" & _
-                       " SET sClientID = " & strParm(p_oDTMstr(0).Item("sClientID")) & _
-                          ", nEntryNox = 1" & _
-                          ", sEmailAdd = " & strParm(p_oDTMstr(0).Item("sEmailAdd")) & _
-                          ", nPriority = 1"
-                If p_oApp.Execute(lsSQL, "Client_eMail_Address") = 0 Then
-                    If p_sParent = "" Then p_oApp.RollBackTransaction()
-                    Return False
-                End If
-            End If
-        Else
-            lsSQL = ADO2SQL(p_oDTMstr, p_sMasTable, "sClientID = " & strParm(p_oDTMstr(0).Item("sClientID")), p_oApp.UserID, Format(p_oApp.SysDate, "yyyy-MM-dd"))
-            If lsSQL <> "" Then
                 If p_oApp.Execute(lsSQL, p_sMasTable) = 0 Then
                     If p_sParent = "" Then p_oApp.RollBackTransaction()
                     Return False
                 End If
 
-                'Review the Client_Mobile if there is an entry only...
-                If p_oDTMstr(0).Item("sMobileNo") <> p_oDTMstr_Old(0).Item("sMobileNo") Then
-                    If Not saveMobile() Then
+                'Save Mobile
+                If p_oDTMstr(0).Item("sMobileNo") <> "" Then
+                    lsSQL = "INSERT INTO Client_Mobile" &
+                       " SET sClientID = " & strParm(p_oDTMstr(0).Item("sClientID")) &
+                          ", nEntryNox = 1" &
+                          ", sMobileNo = " & strParm(p_oDTMstr(0).Item("sMobileNo")) &
+                          ", nPriority = 1" &
+                          ", cIncdMktg = '1'" &
+                          ", nNoRetryx = 0" &
+                          ", cInvalidx = '0'" &
+                          ", cNewMobil = '1'" &
+                          ", cRecdStat = '1'"
+                    If p_oApp.Execute(lsSQL, "Client_Mobile") = 0 Then
                         If p_sParent = "" Then p_oApp.RollBackTransaction()
                         Return False
                     End If
                 End If
 
-                If p_oDTMstr(0).Item("sPhoneNox") <> p_oDTMstr_Old(0).Item("sPhoneNox") Then
-                    If Not saveTelephone() Then
+                'Save Telephone
+                If p_oDTMstr(0).Item("sPhoneNox") <> "" Then
+                    lsSQL = "INSERT INTO Client_Telephone" &
+                       " SET sClientID = " & strParm(p_oDTMstr(0).Item("sClientID")) &
+                          ", nEntryNox = 1" &
+                          ", sPhoneNox = " & strParm(p_oDTMstr(0).Item("sPhoneNox")) &
+                          ", nPriority = 1" &
+                          ", cInvalidx = '0'" &
+                          ", cConfirmd = '0'" &
+                          ", cRecdStat = '1'"
+                    If p_oApp.Execute(lsSQL, "Client_Telephone") = 0 Then
                         If p_sParent = "" Then p_oApp.RollBackTransaction()
                         Return False
                     End If
                 End If
 
-                If p_oDTMstr(0).Item("sEmailAdd") <> p_oDTMstr_Old(0).Item("sEmailAdd") Then
-                    If Not SaveEmailAdd() Then
+                'Save Email Address
+                If p_oDTMstr(0).Item("sEmailAdd") <> "" Then
+                    lsSQL = "INSERT INTO Client_eMail_Address" &
+                       " SET sClientID = " & strParm(p_oDTMstr(0).Item("sClientID")) &
+                          ", nEntryNox = 1" &
+                          ", sEmailAdd = " & strParm(p_oDTMstr(0).Item("sEmailAdd")) &
+                          ", nPriority = 1"
+                    If p_oApp.Execute(lsSQL, "Client_eMail_Address") = 0 Then
                         If p_sParent = "" Then p_oApp.RollBackTransaction()
                         Return False
                     End If
                 End If
+            Else
+                lsSQL = ADO2SQL(p_oDTMstr, p_sMasTable, "sClientID = " & strParm(p_oDTMstr(0).Item("sClientID")), p_oApp.UserID, Format(p_oApp.SysDate, "yyyy-MM-dd"))
+                If lsSQL <> "" Then
+                    If p_oApp.Execute(lsSQL, p_sMasTable) = 0 Then
+                        If p_sParent = "" Then p_oApp.RollBackTransaction()
+                        Return False
+                    End If
 
+                    'Review the Client_Mobile if there is an entry only...
+                    If p_oDTMstr(0).Item("sMobileNo") <> p_oDTMstr_Old(0).Item("sMobileNo") Then
+                        If Not saveMobile() Then
+                            If p_sParent = "" Then p_oApp.RollBackTransaction()
+                            Return False
+                        End If
+                    End If
+
+                    If p_oDTMstr(0).Item("sPhoneNox") <> p_oDTMstr_Old(0).Item("sPhoneNox") Then
+                        If Not saveTelephone() Then
+                            If p_sParent = "" Then p_oApp.RollBackTransaction()
+                            Return False
+                        End If
+                    End If
+
+                    If p_oDTMstr(0).Item("sEmailAdd") <> p_oDTMstr_Old(0).Item("sEmailAdd") Then
+                        If Not SaveEmailAdd() Then
+                            If p_sParent = "" Then p_oApp.RollBackTransaction()
+                            Return False
+                        End If
+                    End If
+
+                End If
             End If
-        End If
 
-        p_nEditMode = xeEditMode.MODE_READY
-        If p_sParent = "" Then p_oApp.CommitTransaction()
+            p_nEditMode = xeEditMode.MODE_READY
+            If p_sParent = "" Then p_oApp.CommitTransaction()
 
-        Return True
+            Return True
+        Catch ex As Exception
+            If p_sParent = "" Then p_oApp.RollBackTransaction()
+            Return False
+        End Try
     End Function
 
     Private Function saveMobile() As Boolean
